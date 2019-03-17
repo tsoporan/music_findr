@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: musicfindr_dev
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      PG_USER: postgres
+      PG_PASSWORD: postgres
+      PG_HOST: db
+      PG_PORT: 5432
+      PG_DATABASE: musicfindr_dev
+
+volumes:
+  db-data:
