@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -27,6 +29,14 @@ func apiRouter() http.Handler {
 }
 
 func main() {
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "4000"
+	}
+
+	conn := fmt.Sprintf(":%s", port)
+
 	router := chi.NewRouter()
 
 	// Default middlewares
@@ -46,6 +56,6 @@ func main() {
 	// Mount API
 	router.Mount("/api", apiRouter())
 
-	log.Printf("Listening on port %d ...", 4000)
-	http.ListenAndServe(":4000", router)
+	log.Printf("Listening on: %s", conn)
+	http.ListenAndServe(conn, router)
 }
