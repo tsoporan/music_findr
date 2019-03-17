@@ -11,7 +11,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "4000:4000"
     environment:
@@ -21,6 +21,8 @@ services:
       PG_HOST: db
       PG_PORT: 5432
       PG_DATABASE: musicfindr_dev
+    volumes:
+      - ./:/go/src/github.com/tsoporan/music_findr_api
 
 volumes:
   db-data:

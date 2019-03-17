@@ -1,0 +1,17 @@
+# Dev docker file with hot reload
+
+FROM golang:1.12
+
+WORKDIR $GOPATH/src/github.com/tsoporan/music_findr_api
+
+COPY . .
+
+# Deps
+RUN go get -d -v ./...
+
+# Hot reloading
+RUN go get github.com/githubnemo/CompileDaemon
+
+EXPOSE 4000
+
+ENTRYPOINT CompileDaemon -build="go build" -command="./music_findr_api"
